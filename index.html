@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Micro-ERP Moda | Inventario y Almacén</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>👗 Micro-ERP Moda: Inventario y Almacén</h1>
+        <p>Datos sincronizados con Sim Companies | Basado en arquitectura Odoo</p>
+    </header>
+
+    <main class="container">
+        <!-- Tarjetas de Métricas Clave -->
+        <section class="metricas">
+            <div class="card">
+                <h3>Valor Total del Almacén</h3>
+                <p id="valor-almacen" class="numero">$0.00</p>
+            </div>
+            <div class="card">
+                <h3>Total de Artículos</h3>
+                <p id="total-articulos" class="numero">0</p>
+            </div>
+            <div class="card alerta-card">
+                <h3>Alertas de Stock Bajo (&lt; 60 u.)</h3>
+                <p id="alertas-stock" class="numero">0</p>
+            </div>
+        </section>
+
+        <!-- Formularios Rápidos -->
+        <section class="formularios-grid">
+            <!-- Formulario 1: Registrar Entrada / Salida -->
+            <div class="panel">
+                <h2>📦 Registrar Movimiento de Almacén</h2>
+                <form id="form-movimiento">
+                    <label>Producto / Insumo:</label>
+                    <select id="mov-producto" required></select>
+
+                    <label>Tipo de Movimiento:</label>
+                    <select id="mov-tipo" required>
+                        <option value="ENTRADA">ENTRADA (Compra / Producción)</option>
+                        <option value="SALIDA">SALIDA (Venta / Descarte)</option>
+                    </select>
+
+                    <label>Cantidad:</label>
+                    <input type="number" id="mov-cantidad" min="1" placeholder="Ej. 50" required>
+
+                    <label>Motivo:</label>
+                    <input type="text" id="mov-motivo" placeholder="Ej. Compra de tela o Venta a cliente" required>
+
+                    <button type="submit" class="btn-primary">Registrar Movimiento</button>
+                </form>
+            </div>
+
+            <!-- Formulario 2: Agregar Nuevo Producto al Catálogo -->
+            <div class="panel">
+                <h2>➕ Nuevo Insumo o Producto</h2>
+                <form id="form-producto">
+                    <div class="fila-doble">
+                        <input type="number" id="prod-id" placeholder="ID Sim Companies (ej. 42)" required>
+                        <input type="text" id="prod-nombre" placeholder="Nombre (ej. Seda)" required>
+                    </div>
+                    <select id="prod-categoria" required>
+                        <option value="Insumo">Insumo / Materia Prima</option>
+                        <option value="Producto Terminado">Producto Terminado</option>
+                    </select>
+                    <div class="fila-triple">
+                        <input type="number" id="prod-stock" placeholder="Stock inicial" min="0" required>
+                        <input type="number" step="0.01" id="prod-costo" placeholder="Costo ($)" min="0" required>
+                        <input type="number" step="0.01" id="prod-precio" placeholder="Precio Mercado ($)" min="0" required>
+                    </div>
+                    <button type="submit" class="btn-secondary">Agregar al Catálogo</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Tabla 1: Inventario Actual -->
+        <section class="panel">
+            <h2>📊 Inventario en Tiempo Real</h2>
+            <div class="tabla-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Producto</th>
+                            <th>Categoría</th>
+                            <th>Stock Actual</th>
+                            <th>Costo Unit.</th>
+                            <th>Precio Mercado</th>
+                            <th>Margen Est.</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabla-productos"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Tabla 2: Historial de Movimientos -->
+        <section class="panel">
+            <h2>🕒 Historial de Entradas y Salidas</h2>
+            <div class="tabla-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Producto</th>
+                            <th>Tipo</th>
+                            <th>Cantidad</th>
+                            <th>Motivo</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabla-movimientos"></tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>
